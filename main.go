@@ -138,7 +138,9 @@ func NewSearchApp(key string) (*SearchApp, error) {
 		searchAPI: api,
 		mux:       m,
 	}
-	s.mux.Handle("/", http.FileServer(http.Dir("site")))
+	s.mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello from the omdb-example service.")
+	})
 	s.mux.HandleFunc("/search", s.Search)
 	return s, nil
 }
